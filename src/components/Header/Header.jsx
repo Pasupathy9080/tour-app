@@ -60,7 +60,7 @@ const toggleMenu = ()=>{
               </div>
             </div>
 
-            <div className="nav_right d-flex align-items-center gap-4">
+            <div className="nav_right d-flex align-items-center p-3 gap-4">
               <div className="nav_btns d-flex align-items-center gap-4">
                 {user ? (
                   <>
@@ -72,7 +72,7 @@ const toggleMenu = ()=>{
                 ) : (
                   <>
                     <Button className="btn secondary__btn">
-                      <Link to="/login">login</Link>
+                      <Link to="/login">Login</Link>
                     </Button>
                     <Button className="btn primary__btn">
                       <Link to="/register">Register</Link>
