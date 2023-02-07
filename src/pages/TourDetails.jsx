@@ -20,7 +20,7 @@ const TourDetails = () => {
   const {user} =useContext(AuthContext)
 
   // const tours = tourData.find(tours => tours.id === id);
-  const {data:tours} = useFetch(`${BASE_URL}/tours/${id}`)
+  const {data:tours} = useFetch(`${BASE_URL}/api/v1/tours/${id}`)
 
   useEffect(()=>{
     window.scrollTo(0,0);
@@ -58,7 +58,7 @@ const TourDetails = () => {
         reviewText,
         rating:tourRating
       }
-        const res =await fetch(`${BASE_URL}/review/${id}` ,{
+        const res =await fetch(`${BASE_URL}/api/v1/review/${id}` ,{
           method:'post',
           headers:{
             'content-type':'application/json'

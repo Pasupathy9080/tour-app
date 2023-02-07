@@ -26,7 +26,7 @@ const SearchBar = () => {
     const distance = distanceRef.current.value
     const maxGroupSize = maxGroupSizeRef.current.value
     
-    const res = await fetch(`${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
+    const res = await fetch(`${BASE_URL}/api/v1/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
     if (!res.ok) alert('All inputs are required')
 
 
