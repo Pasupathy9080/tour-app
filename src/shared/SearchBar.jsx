@@ -31,7 +31,7 @@ const SearchBar = () => {
 
 
     const result =await res.json()
-    navigate(`/api/v1/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`,{state: result.data})
+    navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`,{state: result.data})
 
 
     // if(location==='' || distance==='' || maxGroupSize===''){
