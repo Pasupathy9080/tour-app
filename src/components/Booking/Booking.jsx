@@ -41,7 +41,7 @@ const Booking = ({ tours, avgRating }) => {
         navigate("/login");
       }
 
-      const res =await fetch(`${BASE_URL}/booking`,{
+      const res =await fetch(`${BASE_URL}/api/v1/booking`,{
         method:'post',
         headers:{
           'content-type':'application/json'
