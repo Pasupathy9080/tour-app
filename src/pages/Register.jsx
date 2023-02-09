@@ -31,7 +31,7 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(credentials)
+    // console.log(credentials)
     try{
      const res = await fetch(`${BASE_URL}/api/v1/auth/register`,{
       method:'post',
