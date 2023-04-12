@@ -4,6 +4,7 @@ import { Form, FormGroup, ListGroup, ListGroupItem,Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Booking = ({ tours, avgRating }) => {
   const { price, reviews} = tours;
@@ -37,7 +38,7 @@ const Booking = ({ tours, avgRating }) => {
       //   navigate("/register");
       // }
       if (!user || user === undefined || user === null) {
-        alert("please signin");
+        toast.warning("please signin");
         navigate("/login");
       }
 
@@ -53,18 +54,20 @@ const Booking = ({ tours, avgRating }) => {
       const result = await res.json();
 
       if(!res.ok){
-        return alert (result.messaage)
+        return toast.error(result.messaage)
       }
 
       if (user || user === user.user.name) {
         navigate("/payment");
       }
     } catch (err) {
-    alert(err.message)
+    toast.error("please Login")
   }
   };
 
   return (
+    <>
+    <ToastContainer />
     <div className="booking p-3">
       <div className="booking_top d-flex align-items-center justify-content-between ">
         <h3 className="fw-bold">
@@ -155,6 +158,7 @@ const Booking = ({ tours, avgRating }) => {
         </ListGroup>
       </div>
     </div>
+    </>
   );
 };
 
