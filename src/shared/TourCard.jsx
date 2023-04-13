@@ -1,11 +1,14 @@
-import React from "react";
+import React,{useContext} from "react";
 import "./TourCard.css";
 // import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import calculateAvgRating from "../utils/avgRating";
+import { AuthContext } from "../context/AuthContext";
 
 
 const TourCard = ({ tours }) => {
+  const { user } = useContext(AuthContext);
+
   const { _id, title, city, photo, price, featured, reviews } = tours;
   const {totalRating,avgRating}=calculateAvgRating(reviews)
 
@@ -33,14 +36,16 @@ const TourCard = ({ tours }) => {
             </span>
           </div>
           <h5 className="tour_title fw-bold m-2">
-            <Link to={`/tours/${_id}`}>{title}</Link>
+            {user ?<><Link to={`/tours/${_id}`}>{title}</Link></>:<><Link to='/login'></Link></>}
+            
           </h5>
           <div className="card_bottom d-flex align-items-center justify-content-between mt-3 gap-4">
             <h5>
               ${price} <span>/per person</span>
             </h5>
             <button className="btn booking_btn">
-              <Link to={`/tours/${_id}`}>Book Now</Link>
+              {user ? <><Link to={`/tours/${_id}`}>Book Now</Link></> :<><Link to='/login'>Book Now</Link></>}
+              
             </button>
           </div>
         

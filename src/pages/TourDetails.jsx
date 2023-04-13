@@ -149,24 +149,7 @@ const submitHandler = async (e) => {
 
                 <div className="tour_reviews mt-4 ">
                   <h5 className="fw-bold">Reviews({reviews?.length})</h5>
-                  <Form onSubmit={submitHandler}>
-                    {/* <div className="d-flex align-items-center gap-3 mb-4 rating_group">
-                      <span key={0} onClick={()=>setTourRating(0 + 1)}>
-                        1<i className="ri-star-s-fill"></i>
-                      </span>
-                      <span key={1} onClick={()=>setTourRating(1 + 1)}>
-                        2<i className="ri-star-s-fill"></i>
-                      </span>
-                      <span key={2} onClick={()=>setTourRating(2 + 1)}>
-                        3<i className="ri-star-s-fill"></i>
-                      </span>
-                      <span key={3} onClick={()=>setTourRating(3 + 1)}>
-                        4<i className="ri-star-s-fill"></i>
-                      </span>
-                      <span key={4} onClick={()=>setTourRating(4 + 1)}>
-                        5<i className="ri-star-s-fill"></i>
-                      </span>
-                    </div> */}
+                  <Form onSubmit={submitHandler}>           
                     <div className="d-flex align-items-center gap-3 mb-4 rating_group">
                       {ratingOptions.map((element) => (
                         <span

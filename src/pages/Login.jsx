@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
@@ -18,9 +18,7 @@ const Login = () => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.id]: e.target.value });

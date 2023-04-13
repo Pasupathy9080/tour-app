@@ -3,19 +3,24 @@ import "./Booking.css";
 import { Form, FormGroup, ListGroup, ListGroupItem,Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { BASE_URL } from "../../utils/config";
+// import { BASE_URL } from "../../utils/config";
 import { ToastContainer, toast } from 'react-toastify';
+import { useParams } from "react-router-dom";
+
 
 const Booking = ({ tours, avgRating }) => {
-  const { price, reviews} = tours;
+  const { id } = useParams();
+  // console.log(id)
+  const { price, reviews,title} = tours;
   const navigate = useNavigate();
-
   const { user } = useContext(AuthContext);
 
   const [booking, setBooking] = useState({
-    userId: user && user._id,
+    tourId:id,
+    tourName:title,
+    userId: user && user.data._id,
     userEmail: user && user.email,
-    fullName:'',
+    fullName:user.data.username,
     phone:'',
     guestSize: 1,
     bookAt:'',
@@ -33,16 +38,13 @@ const Booking = ({ tours, avgRating }) => {
     e.preventDefault();
     // console.log(booking)
     try {
-      // if(!user || user ===undefined || user===null){
-      //   return alert('please sign in')
-      //   navigate("/register");
-      // }
+     
       if (!user || user === undefined || user === null) {
         toast.warning("please signin");
         navigate("/login");
       }
 
-      const res =await fetch(`${BASE_URL}/api/v1/booking`,{
+      const res =await fetch(`https://tour-app-be.onrender.com/api/v1/booking`,{
         method:'post',
         headers:{
           'content-type':'application/json'
@@ -52,7 +54,7 @@ const Booking = ({ tours, avgRating }) => {
       })
 
       const result = await res.json();
-
+      console.log(result)
       if(!res.ok){
         return toast.error(result.messaage)
       }
@@ -67,6 +69,7 @@ const Booking = ({ tours, avgRating }) => {
 
   return (
     <>
+  
     <ToastContainer />
     <div className="booking p-3">
       <div className="booking_top d-flex align-items-center justify-content-between ">
@@ -88,19 +91,34 @@ const Booking = ({ tours, avgRating }) => {
               type="text"
               placeholder="Full Name"
               id="fullName"
+              value={user.data.username}
               required
               onChange={handleChange}
+              disabled
             />
           </FormGroup>
-          {/* <FormGroup>
+          <FormGroup>
             <input
-              type="email"
-              placeholder="Email"
-              id="fullName"
+              type="text"
+              placeholder="tourName"
+              id="tourName"
+              value={title}
               required
               onChange={handleChange}
+              disabled
             />
-          </FormGroup> */}
+          </FormGroup>
+          <FormGroup>
+            <input
+              type="text"
+              placeholder="tourId"
+              id="tourId"
+              value={id}
+              required
+              onChange={handleChange}
+              disabled
+            />
+          </FormGroup>
           <FormGroup>
             <input
               type="number"
