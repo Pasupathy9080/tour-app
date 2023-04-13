@@ -1,9 +1,15 @@
-import React, { useContext,useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./Header.css";
 import { Container, Row, Button } from "reactstrap";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/traveGo-logo.png";
 import { AuthContext } from "./../../context/AuthContext";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 const nav_links = [
   {
@@ -21,7 +27,7 @@ const nav_links = [
 ];
 
 const Header = () => {
-  const menuRef =useRef(null)
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
   const logout = () => {
@@ -29,10 +35,13 @@ const Header = () => {
     navigate("/");
   };
 
-const toggleMenu = ()=>{
- menuRef.current.classList.toggle('show_menu')
-}
+  const toggleMenu = () => {
+    menuRef.current.classList.toggle("show_menu");
+  };
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   return (
     <header className="header">
       <Container>
@@ -64,10 +73,37 @@ const toggleMenu = ()=>{
               <div className="nav_btns d-flex align-items-center gap-1">
                 {user ? (
                   <>
-                    <h5 className="mb-0">{user.username}</h5>
-                    <Button className="btn btn-dark" onClick={logout}>
-                      Logout
-                    </Button>
+                    {user.role === "admin" && (
+                      <>
+                        <h5 className="mb-1  mx-2">
+                          <NavLink to="/dashboard"  className={(navClass) =>
+                        navClass.isActive ? "text-success" : "text-dark"
+                      }>
+                            Dashboard
+                          </NavLink>
+                        </h5>
+                      </>
+                    )}
+
+                    <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                      <DropdownToggle caret>
+                        {user.data.username}
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem className="profile mb-2">
+                          <Link to="/profile" className="text-dark">
+                            My Bookings
+                          </Link>
+                        </DropdownItem>
+                        <DropdownItem
+                          onClick={logout}
+                          className="profile mb-2 text-danger"
+                        >
+                          Logout
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    {/* <h5 className="mb-1 mx-2">{user.data.username}</h5> */}
                   </>
                 ) : (
                   <>
@@ -79,11 +115,10 @@ const toggleMenu = ()=>{
                     </Button>
                   </>
                 )}
-     </div>
-                <span className="mobile_menu" onClick={toggleMenu}>
-                  <i className="ri-menu-line"></i>
-                </span>
-              
+              </div>
+              <span className="mobile_menu" onClick={toggleMenu}>
+                <i className="ri-menu-line"></i>
+              </span>
             </div>
           </div>
         </Row>

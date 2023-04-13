@@ -1,58 +1,58 @@
 import React, { useState,useContext,useEffect} from "react";
-import { Container, Row, Col, Form, FormGroup, Button } from "reactstrap";
+import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
 import { Link,useNavigate} from "react-router-dom";
 import "../styles/Login.css";
 import registerImg from "../assets/images/Mail-sent.jpg";
-
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "./../utils/config";
 
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
-    username:undefined,
-    email:undefined,
-    password:undefined,
+    username: undefined,
+    email: undefined,
+    password: undefined,
   });
+  const [loading, setLoading] = useState(false);
   
-  const {dispatch} = useContext(AuthContext)
-  const navigate = useNavigate()
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   
-  useEffect(()=>{
-    window.scrollTo(0,0);
-  },[]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.id]: e.target.value });
   };
-  // const handleChange=(e)=>{
-  //   setCredentials(prev=>({...prev,[e.target.id]:e.target.value}))
-  // }
-
+  
   const handleClick = async (e) => {
     e.preventDefault();
-    // console.log(credentials)
-    try{
-     const res = await fetch(`${BASE_URL}/api/v1/auth/register`,{
-      method:'post',
-      headers:{
-        "content-type":"application/json",
-      },
-      body: JSON.stringify({credentials}),
-     });
-
-     const result = await res.json();
-
-     if(!res.ok) alert(result.message)
-     
-     dispatch({type:'REGISTER_SUCCESS'});
-     navigate('/login');
+    setLoading(true);
+    console.log(credentials);
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ credentials }),
+      });
   
-    } catch(err){
+      const result = await res.json();
+  
+      if (!res.ok) {
+        alert(result.message);
+      } else {
+        dispatch({ type: "REGISTER_SUCCESS" });
+        navigate("/login");
+      }
+    } catch (err) {
       alert(err.message);
     }
-    
+    setLoading(false);
   };
+  
   return (
     <section className="p-3">
       <Container>
@@ -94,7 +94,7 @@ const Register = () => {
                     />
                   </FormGroup>
                   <Button className="btn secondary__btn auth_btn" type="submit">
-                    Create Account
+                   {loading ? <> <Spinner color="light"/></> :<>Create</>}
                   </Button>
                 </Form>
                 <p>

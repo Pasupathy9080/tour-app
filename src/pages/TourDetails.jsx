@@ -11,74 +11,79 @@ import {BASE_URL} from "./../utils/config"
 import useFetch from "./../components/hooks/useFetch"
 import {AuthContext} from './../context/AuthContext'
 import {useNavigate} from "react-router-dom";
-
+import {toast,ToastContainer} from 'react-toastify'
 
 const TourDetails = () => {
   const { id } = useParams();
-  const reviewMsgRef = useRef("");
-  const [tourRating, setTourRating] = useState(0);
-  const {user} =useContext(AuthContext)
+const reviewMsgRef = useRef("");
+const [tourRating, setTourRating] = useState(5);
+const { user } = useContext(AuthContext);
+const { data: tours, setData: setTours } = useFetch(`${BASE_URL}/api/v1/tours/${id}`); // added setData
 
-  // const tours = tourData.find(tours => tours.id === id);
-  const {data:tours} = useFetch(`${BASE_URL}/api/v1/tours/${id}`)
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [tours]);
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
-  },[tours]);
+const {
+  photo,
+  title,
+  desc,
+  price,
+  address,
+  city,
+  reviews,
+  distance,
+  maxGroupSize,
+} = tours;
+const { totalRating, avgRating } = calculateAvgRating(reviews);
+const options = { day: "numeric", month: "long", year: "numeric" };
+const navigate = useNavigate();
 
-  const {
-    photo,
-    title,
-    desc,
-    price,
-    address,
-    reviews,
-    city,
-    distance,
-    maxGroupSize,
-  } = tours;
-  const { totalRating, avgRating } = calculateAvgRating(reviews);
+const submitHandler = async (e) => {
+  e.preventDefault();
+  const reviewText = reviewMsgRef.current.value;
 
-  const options = { day: "numeric", month: "long", year: "numeric" };
-  const navigate = useNavigate()
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const reviewText = reviewMsgRef.current.value;
-    
-    try{
-      
-      if (!user || user ===undefined || user ===null){
-        alert('please signin')
-        navigate('/login');
-      }
-
-      const reviewObj = {
-        username:user?.username,
-        reviewText,
-        rating:tourRating
-      }
-        const res =await fetch(`${BASE_URL}/api/v1/review/${id}` ,{
-          method:'post',
-          headers:{
-            'content-type':'application/json'
-          },
-          credentials:'include',
-          body:JSON.stringify(reviewObj)
-        })
-        
-        const result= await res.json();
-        // if(!res.ok) {
-        //   return alert(result.message);
-        // }
-
-        alert(result.message)
-
-    } catch(err){
-      console.log(err)
-      // alert(err.message);
+  try {
+    if (!user || user === undefined || user === null) {
+      toast.error('Please sign in');
+      navigate('/login');
     }
-  };
+
+    const reviewObj = {
+      username: user?.username,
+      reviewText,
+      rating: tourRating
+    };
+
+    const res = await fetch(`${BASE_URL}/api/v1/review/${id}`, {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify(reviewObj)
+    });
+
+    const result = await res.json();
+    toast.success(result.message);
+
+    // Update the UI with the submitted review immediately
+    // Assuming result.data is the new review object returned from the API
+    // You may need to modify this based on your API response structure
+
+    // Fetch updated tour data from the API to reflect the new review
+    const updatedTours = await fetch(`${BASE_URL}/api/v1/tours/${id}`);
+    const updatedToursData = await updatedTours.json();
+    setTours(updatedToursData); // Update the state with the new tour data
+
+  } catch (err) {
+    console.log(err);
+    // alert(err.message);
+  }
+};
+
+  
+  
   const ratingOptions = [
     { id: 1, value: 1 },
     { id: 2, value: 2 },
@@ -88,6 +93,7 @@ const TourDetails = () => {
   ];
   return (
     <>
+    <ToastContainer/>
       <section className="pt-5">
         <Container>
           <Row>
@@ -189,8 +195,8 @@ const TourDetails = () => {
                   </Form>
 
                   <ListGroup className="user_reviews">
-                    {reviews?.map(review => (
-                      <div className="review_item" key={tours}>
+                    {reviews?.map((review,idx) => (
+                      <div className="review_item" key={idx}>
                         <img src={avatar} alt="reviewer" />
                         <div className="w-100">
                           <div className="d-flex align-items-center justify-content-between">

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Container, Row, Col, Form, FormGroup, Button } from "reactstrap";
+import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import loginImg from "../assets/images/Mobile.jpg";
@@ -13,6 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+ const [loading,setLoading]=useState(false);
 
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
-
+    setLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/login`, {
         method: "post",
@@ -38,21 +39,24 @@ const Login = () => {
         credentials: "include",
         body: JSON.stringify(credentials),
       });
-
+    
       const result = await res.json();
       if (!res.ok) {
         // Handle incorrect credentials
         toast.error("Incorrect email or password");
-        return dispatch({ type: "LOGIN_FAILURE", payload: result.message });
+        dispatch({ type: "LOGIN_FAILURE", payload: result.message });
+      } else {
+        dispatch({ type: "LOGIN_SUCCESS", payload: { data: result.data, role: result.role } });
+        toast.success("Login successful");
+        navigate("/"); 
       }
-
-      dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
-      toast.success("Login successful");
-      navigate("/"); 
+      setLoading(false);
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.message });
       toast.error(err.message);
+      setLoading(false);
     }
+    
   };
 
   return (
@@ -91,7 +95,8 @@ const Login = () => {
                     className="btn secondary__btn auth_btn"
                     type="submit"
                   >
-                    Login
+                    {loading ? <> <Spinner color='light'/></> :<>Login</>}
+                    
                   </Button>
                 </Form>
                 <p>

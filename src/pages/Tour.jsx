@@ -47,6 +47,7 @@ const Tour = () => {
             tours?.map(tours=>(
               <Col lg='3' md='6' sm='6' className='mb-4' key={tours._id}>
                  <TourCard tours={tours} className="tour-search-card"/>
+                 
               </Col>
             ))
           }
@@ -65,20 +66,6 @@ const Tour = () => {
         </Row>
       </Container>
     </section> 
-
-    {/* <div>
-    <FeaturedTourList tours={tours}/>
-    <div className="pagination d-flex align-items-center
-            justify-content-center mt-4 gap-3">
-               {[...Array(pageCount).keys()].map(number=>
-                <span key={number} onClick={()=>setPage(number)}
-                className={page===number?"active_page":""}
-                >
-                  {number +1}
-                </span>
-                )}
-    </div>
-    </div> */}
     
   <Newsletter/>
 

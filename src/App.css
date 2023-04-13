@@ -87,3 +87,8 @@ ul,li {
   font-size: 1.7rem;
   color: var(--heading-color);
 }
+.booking-cart{
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+}
