@@ -169,7 +169,7 @@ const Booking = ({ tours, avgRating }) => {
             </ListGroupItem>
             <ListGroupItem className="border-0 p-0 d-flex mt-2 justify-content-around gap-5 w-100 bg-success rounded-2 p-1">
               <h5 className="fw-bold text-white">Total</h5>
-              <h4 className="text-white"> $ {totalAmount}<span>{paid && <>Paid success</>}</span></h4>
+              <h4 className="text-white"> $ {totalAmount}<span>{paid && <></>}</span></h4>
               
             </ListGroupItem>
             <div>
