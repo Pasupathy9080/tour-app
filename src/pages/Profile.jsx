@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -11,12 +11,12 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import { AuthContext } from "../context/AuthContext";
 import { FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector(state => state.auth.user);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTourId, setSelectedTourId] = useState(null);
@@ -127,7 +127,8 @@ const Profile = () => {
                           </td>
                           <td className="text-center">{booking.guestSize}</td>
                           <td className="text-center">
-                            <FaCheckCircle className="text-success" />
+                            {localStorage.getItem("paid") === "true" ?<><FaCheckCircle className="text-success" /></> :<>pending</>}
+                            
                           </td>
                         </tr>
                       ))}

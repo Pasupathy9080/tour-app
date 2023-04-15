@@ -1,14 +1,15 @@
-import React,{useContext} from "react";
+import React from "react";
 import "./TourCard.css";
 // import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import calculateAvgRating from "../utils/avgRating";
-import { AuthContext } from "../context/AuthContext";
+import { useSelector } from 'react-redux';
+
 
 
 const TourCard = ({ tours }) => {
-  const { user } = useContext(AuthContext);
 
+  const user = useSelector(state => state.auth.user);
   const { _id, title, city, photo, price, featured, reviews } = tours;
   const {totalRating,avgRating}=calculateAvgRating(reviews)
 

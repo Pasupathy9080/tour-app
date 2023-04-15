@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect,useContext} from "react";
+import React, { useRef, useState,useEffect} from "react";
 import "../styles/TourDetails.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
 import { useParams } from "react-router-dom";
@@ -9,15 +9,16 @@ import Booking from "../components/Booking/Booking";
 import Newsletter from "../shared/Newsletter";
 import {BASE_URL} from "./../utils/config"
 import useFetch from "./../components/hooks/useFetch"
-import {AuthContext} from './../context/AuthContext'
 import {useNavigate} from "react-router-dom";
 import {toast,ToastContainer} from 'react-toastify'
+import { useSelector } from 'react-redux';
+
 
 const TourDetails = () => {
   const { id } = useParams();
 const reviewMsgRef = useRef("");
 const [tourRating, setTourRating] = useState(5);
-const { user } = useContext(AuthContext);
+const user = useSelector(state => state.auth.user);
 const { data: tours, setData: setTours } = useFetch(`${BASE_URL}/api/v1/tours/${id}`); // added setData
 
 useEffect(() => {

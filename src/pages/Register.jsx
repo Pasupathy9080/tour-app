@@ -1,11 +1,11 @@
-import React, { useState,useContext,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
-import { Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import registerImg from "../assets/images/Mail-sent.jpg";
-import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "./../utils/config";
-
+import { registerSuccess } from "../actions/authActions";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
@@ -14,18 +14,19 @@ const Register = () => {
     password: undefined,
   });
   const [loading, setLoading] = useState(false);
-  
-  const { dispatch } = useContext(AuthContext);
+
+    const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.id]: e.target.value });
   };
-  
+
   const handleClick = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -38,13 +39,13 @@ const Register = () => {
         },
         body: JSON.stringify({ credentials }),
       });
-  
+
       const result = await res.json();
-  
+
       if (!res.ok) {
         alert(result.message);
       } else {
-        dispatch({ type: "REGISTER_SUCCESS" });
+        dispatch(registerSuccess());
         navigate("/login");
       }
     } catch (err) {
@@ -52,7 +53,7 @@ const Register = () => {
     }
     setLoading(false);
   };
-  
+
   return (
     <section className="p-3">
       <Container>
@@ -63,8 +64,7 @@ const Register = () => {
               {/* <img src="https://img.freepik.com/free-psd/travel-background-composition-with-hat-baggage_23-2149603148.jpg?w=740&t=st=1675569377~exp=1675569977~hmac=9f1e3658a6fb20fa853c6b3e124e8a80cbbc06f42da9d72f1931e11143561252" alt="registerImg" /> */}
                 <img src={registerImg} alt="loginImg" />
               </div>
-              <div className="login_form">             
-               
+              <div className="login_form">
                 <Form onSubmit={handleClick}>
                   <FormGroup>
                     <input
@@ -94,7 +94,14 @@ const Register = () => {
                     />
                   </FormGroup>
                   <Button className="btn secondary__btn auth_btn" type="submit">
-                   {loading ? <> <Spinner color="light"/></> :<>Create</>}
+                    {loading ? (
+                      <>
+                        {" "}
+                        <Spinner color="light" />
+                      </>
+                    ) : (
+                      <>Create</>
+                    )}
                   </Button>
                 </Form>
                 <p>

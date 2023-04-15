@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./../pages/Home";
 import Login from "./../pages/Login";
@@ -10,10 +10,12 @@ import Payment from "../pages/Payment";
 import About from "../pages/About";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
-import { AuthContext } from "../context/AuthContext";
+// import { AuthContext } from "../context/AuthContext";
+import Success from "../pages/Success";
+import { useSelector } from 'react-redux';
 
 const Routers = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector(state => state.auth.user);
 
   return (
     <Routes>
@@ -29,9 +31,11 @@ const Routers = () => {
           <Route path="/payment" element={<Payment />} />
           <Route path="/about" element={<About />} />
           <Route path="/tours/search" element={<SearchResultList />} />
+          <Route path="/success/:id" element={<Success />} />
         </>
       ) : (
         <>
+          {/* <Route path="/success/:id" element={<Success />} /> */}
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />

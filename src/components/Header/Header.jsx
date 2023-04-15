@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import "./Header.css";
 import { Container, Row, Button } from "reactstrap";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/traveGo-logo.png";
-import { AuthContext } from "./../../context/AuthContext";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from './../../actions/authActions';
 import {
   Dropdown,
   DropdownToggle,
@@ -29,11 +30,13 @@ const nav_links = [
 const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
-  const logout = () => {
-    dispatch({ type: "LOGOUT" });
+  const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
     navigate("/");
   };
+
 
   const toggleMenu = () => {
     menuRef.current.classList.toggle("show_menu");
@@ -86,7 +89,7 @@ const Header = () => {
                     )}
 
                     <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-                      <DropdownToggle caret>
+                      <DropdownToggle caret className="bg-light border-0 text-success mb-2 mx-2">
                         {user.data.username}
                       </DropdownToggle>
                       <DropdownMenu>
@@ -96,7 +99,7 @@ const Header = () => {
                           </Link>
                         </DropdownItem>
                         <DropdownItem
-                          onClick={logout}
+                          onClick={handleLogout}
                           className="profile mb-2 text-danger"
                         >
                           Logout
