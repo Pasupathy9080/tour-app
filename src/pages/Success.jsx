@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Success = () => {
   return (
-    <Container className="mb-5">
+    <Container>
       <Row>
         <Col
           lg="12"
-          className="my-5 py-5 d-flex flex-column align-items-center"
+          className="mt-5 pt-5 d-flex flex-column align-items-center"
         >
           <img
             src="https://cdn3.iconfinder.com/data/icons/basicolor-arrows-checks/24/155_check_ok_sticker_success-512.png"
