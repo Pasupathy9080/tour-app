@@ -1,0 +1,19 @@
+.slider-homes{
+    margin-top: 50px !important;
+}
+.slide-img-home{
+    width: 320px;
+    height: 270px;
+    padding: 10px;
+}
+.slider-home img{
+    width: 100% !important;
+    height: 270px ;
+    object-fit: cover;
+    border-radius:15px !important;
+}
+@media screen and (max-width:768px){
+    .slider-homes{
+        margin-top: 0px !important;
+    }
+}

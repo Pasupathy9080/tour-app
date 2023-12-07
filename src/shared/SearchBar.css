@@ -1,0 +1,107 @@
+.search_bar{
+    padding: 4px 8px;
+    border-radius: 10px;
+    box-shadow: rgba(17,12,46,0.15) 0px 48px 100px 0px;
+    width: max-content;
+    margin-top: 50px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+input[type=number] {
+  appearance: textfield;
+}
+
+.form_group span{
+    font-size: 18px;
+}
+.form_group input{
+    border: none;
+    font-size: 15px;
+    color: var(--heading-color);
+}
+.form_group 
+input:focus, select:focus{
+    outline: none;
+}
+
+.form_group-fast{
+    border-right: 2px solid var(--secondary-color);
+    padding: 5px;
+}
+.form_grouph h6{
+ margin-bottom: 0;
+}
+.search_icon i{
+    font-size: 24px;
+    padding: 8px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-radius:10px 5px 10px 5px;
+    cursor: pointer;
+}
+.search_icon {
+    margin-bottom:20px;
+    margin-right: 10px;
+}
+.alert{
+    margin-top: -10px !important;
+    margin-right: 80px;
+}
+.alert p{
+    background-color:rgb(240, 80, 6) !important;
+    padding: 15px;
+    border-top-left-radius:15px;
+    color: white;
+}
+
+
+@media screen and (max-width:998px) {
+    
+    .search_bar{
+        width: 100%;
+        border-radius: 2rem;
+        overflow: hidden;
+    }
+    .search_bar form{
+        flex-wrap: wrap;
+    }
+    .search_bar form .form_group{
+        width: 48%;
+    }
+    .search-btn{
+        width: 200px;
+        background-color: var(--secondary-color);
+        text-align: center;
+        height: 40px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+}
+
+@media screen and (max-width:534px) {
+    .search_bar form .form_group{
+        width: 100%;
+        padding-left: 30%;
+    }
+    .form_group input{
+        font-size: 0.7rem;
+    }
+    .form_group span i{
+        font-size: 1.1rem;
+    }
+    .form_group h6{
+        font-size: 1.1rem;
+    }
+    .search-btn{
+        margin-left: 30%;
+        margin-bottom: 20px;
+        width: 160px;
+    }
+    .form_group-fast{
+        border: none;
+    }
+}

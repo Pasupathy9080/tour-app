@@ -1,0 +1,12 @@
+.sidebar{
+    background-color:var(--primary-color);
+}
+.sidebar span{
+    cursor: pointer;
+}
+@media screen and (max-width:768px) {
+    .sidebar span{
+        display: none;
+    }
+    
+}

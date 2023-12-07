@@ -1,0 +1,127 @@
+.hero_subtitle img {
+  width: 35px;
+  height: 35px;
+}
+.hero_subtitle {
+  font-family: var(--subtitle-font-name);
+}
+.hero_content,
+.hero_img-box{
+  margin-top: 67px;
+}
+
+.hero_content h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom:0;
+  color: var(--heading-color);
+  margin-bottom: 5px;
+}
+.hero_content>h1>span{
+  font-size:55px;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+.hero_content p {
+  font-size: 16px;
+  color: var(--text-color);
+  line-height: 32px;
+}
+.hero_img-box img,
+.hero_img-box video {
+  width: 100%;
+  height: 275px;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+  object-fit: cover;
+}
+.services_subtitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: rgb(228, 178, 12);
+  font-family: var(--subtitle-font-name);
+}
+.featured_tour-title {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/* experience */
+.experience_content h2 {
+  font-size: 35px;
+  margin-top: 16px;
+  font-weight: 500;
+}
+.experience_content p {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-top: 16px;
+}
+.counter_wrapper {
+  margin-top: 35px;
+}
+.counter_box span {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px 5px;
+}
+.counter_box h6 {
+  font-size: 16px;
+  margin-top: 12px;
+  color: var(--text-color);
+}
+.experience_img img {
+  width: 90%;
+}
+
+/* gallery */
+.gallery_title {
+  font-size: 35px;
+  margin-bottom: 30px;
+  margin-top: 16px;
+}
+.masonry_img {
+  transition: 0.3s;
+}
+.masonry_img:hover {
+  transform: scale(1.1);
+}
+/* testimonial */
+.testimonial_title {
+  font-size: 32px;
+  margin-top: 16px;
+}
+
+@media screen and (max-width:992px){
+    .hero_content h1{
+      font-size: 2.5rem;
+    }
+
+}
+
+@media screen and (max-width:768px){
+  .hero_content h1{
+    font-size: 20px;
+    text-align: center;
+  }
+  .hero_content p{
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+  }
+.hero_content{
+  margin-top: 50px;
+}
+.hero_img-box{
+  margin-top: 20px;
+}
+}
